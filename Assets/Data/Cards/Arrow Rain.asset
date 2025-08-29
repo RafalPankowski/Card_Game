@@ -15,12 +15,22 @@ MonoBehaviour:
   <Description>k__BackingField: Deal 10 damage to all enemies.
   <Mana>k__BackingField: 2
   <Image>k__BackingField: {fileID: 21300000, guid: 680647b209898ca4a95dacf5a2d2bb77, type: 3}
-  <Effects>k__BackingField:
-  - rid: 1276183998798495819
+  <ManualTargetEffects>k__BackingField:
+    rid: -2
+  <OtherEffects>k__BackingField:
+  - <TargetMode>k__BackingField:
+      rid: 1276184030508220493
+    <Effect>k__BackingField:
+      rid: 1276184030508220494
   references:
     version: 2
     RefIds:
-    - rid: 1276183998798495819
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 1276184030508220493
+      type: {class: AllEnemiesTM, ns: , asm: Assembly-CSharp}
+      data: 
+    - rid: 1276184030508220494
       type: {class: DealDamageEffect, ns: , asm: Assembly-CSharp}
       data:
         damageAmount: 10

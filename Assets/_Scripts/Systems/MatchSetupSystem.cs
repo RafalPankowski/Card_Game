@@ -11,7 +11,13 @@ public class MatchSetupSystem : MonoBehaviour
         HeroSystem.Instance.Setup(heroData);
         EnemySystem.Instance.Setup(enemyDatas);
         CardSystem.Instance.Setup(heroData.Deck);
-        DrawCardsGA drawCardsGA = new(5);
-        ActionSystem.Instance.Perform(drawCardsGA);
+
+        RefillManaGA refillManaGA = new();
+        ActionSystem.Instance.Perform(refillManaGA, () =>
+        {
+            DrawCardsGA drawCardsGA = new(5);
+            ActionSystem.Instance.Perform(drawCardsGA);
+        });
+        
     }
 }

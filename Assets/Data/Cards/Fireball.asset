@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09cd88b5aa337d44e92fa2c62fd00be5, type: 3}
   m_Name: Fireball
   m_EditorClassIdentifier: 
-  <Description>k__BackingField: Deal 4 dmg to enemy.
-  <Mana>k__BackingField: 2
+  <Description>k__BackingField: Deal 5 dmg to enemy.
+  <Mana>k__BackingField: 1
   <Image>k__BackingField: {fileID: 21300000, guid: 575155ec12639c74195e6e387daeb03e, type: 3}
-  <Effects>k__BackingField:
-  - rid: -2
+  <ManualTargetEffects>k__BackingField:
+    rid: 1276184030508220499
+  <OtherEffects>k__BackingField: []
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 1276184030508220499
+      type: {class: DealDamageEffect, ns: , asm: Assembly-CSharp}
+      data:
+        damageAmount: 5

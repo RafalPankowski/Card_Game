@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9029384588498573656}
   - component: {fileID: 6931060477220936064}
   - component: {fileID: 1607299187506253648}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 5695255055236810386}
   - component: {fileID: 1025920892656040351}
   - component: {fileID: 4972597283259907846}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EnemyView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -295,9 +295,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3452577003451985586, guid: 58a01ccf64a45b24f95f3f54c810d7e8, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7046117152026174486, guid: 58a01ccf64a45b24f95f3f54c810d7e8, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 7555097272095993938, guid: 58a01ccf64a45b24f95f3f54c810d7e8, type: 3}
       propertyPath: m_Name
       value: CombatantViewBase
+      objectReference: {fileID: 0}
+    - target: {fileID: 7555097272095993938, guid: 58a01ccf64a45b24f95f3f54c810d7e8, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -17,7 +17,7 @@ public class CardSystem : Singleton<CardSystem>
     {
         ActionSystem.AttachPerformer<DrawCardsGA>(DrawCardsPerformer);
         ActionSystem.AttachPerformer<DiscardAllCardsGA>(DiscardAllCardsPerformer);
-        ActionSystem.AttachPerformer<PlayerCardGA>(PlayCardPerformer);
+        ActionSystem.AttachPerformer<PlayCardGA>(PlayCardPerformer);
         ActionSystem.SubscribeReaction<EnemyTurnGA>(EnemyTurnPreReaction, ReactionTiming.PRE);
         ActionSystem.SubscribeReaction<EnemyTurnGA>(EnemyTurnPostReaction, ReactionTiming.POST);
     }
@@ -26,7 +26,7 @@ public class CardSystem : Singleton<CardSystem>
     {
         ActionSystem.DetachPerformer<DrawCardsGA>();
         ActionSystem.DetachPerformer<DiscardAllCardsGA>();
-        ActionSystem.DetachPerformer<PlayerCardGA>();
+        ActionSystem.DetachPerformer<PlayCardGA>();
         ActionSystem.UnsubscribeReaction<EnemyTurnGA>(EnemyTurnPreReaction, ReactionTiming.PRE);
         ActionSystem.UnsubscribeReaction<EnemyTurnGA>(EnemyTurnPostReaction, ReactionTiming.POST);
     }
@@ -61,14 +61,13 @@ public class CardSystem : Singleton<CardSystem>
     {
         foreach(var card in hand)
         {
-            discardPile.Add(card);
             CardView cardView = handView.RemoveCard(card);
             yield return DiscardCard(cardView);
         }
         hand.Clear();
     }
 
-    private IEnumerator PlayCardPerformer(PlayerCardGA playCardGA)
+    private IEnumerator PlayCardPerformer(PlayCardGA playCardGA)
     {
         hand.Remove(playCardGA.Card);
         CardView cardView = handView.RemoveCard(playCardGA.Card);
@@ -77,9 +76,15 @@ public class CardSystem : Singleton<CardSystem>
         SpendManaGA spendManaGA = new(playCardGA.Card.Mana);
         ActionSystem.Instance.AddReaction(spendManaGA);
 
-        foreach(var effect in playCardGA.Card.Effects)
+        if(playCardGA.Card.ManualTargerEffect != null)
         {
-            PerformEffectGA performEffectGA = new(effect);
+            PerformEffectGA performEffectGA = new(playCardGA.Card.ManualTargerEffect, new() { playCardGA.ManualTarget });
+            ActionSystem.Instance.AddReaction(performEffectGA);
+        }
+        foreach(var effectWrapper in playCardGA.Card.OtherEffects)
+        {
+            List<CombatantView> targets = effectWrapper.TargetMode.GetTargets();
+            PerformEffectGA performEffectGA = new(effectWrapper.Effect, targets);
             ActionSystem.Instance.AddReaction(performEffectGA);
         }
     }
@@ -109,6 +114,7 @@ public class CardSystem : Singleton<CardSystem>
 
     private IEnumerator DiscardCard(CardView cardView)
     {
+        discardPile.Add(cardView.Card);
         cardView.transform.DOScale(Vector3.zero, 0.15f);
         Tween tween = cardView.transform.DOMove(discardPilePoint.position, 0.15f);
         yield return tween.WaitForCompletion();
